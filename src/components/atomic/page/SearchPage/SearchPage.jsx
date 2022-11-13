@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 
@@ -18,43 +19,75 @@ const StyledRow = styled(Row)`
   padding: 2rem;
 `;
 
+const regionDropdownItems = regions.map((r) => {
+  return {
+    ...r,
+    key: r?.name,
+    value: r?.name,
+    label: `${r?.name} (${r?.offset} - ${r?.limit + r?.offset})`
+  };
+});
+
+const typeDropdownItems = types.map((t) => ({
+  key: t,
+  value: t,
+  label: t
+}));
+
+const sortbyDropdownItems = sortby.map((s) => ({
+  key: s,
+  value: s,
+  label: s
+}));
+
+const getFetchPokemonFilters = (filters) => {
+  return filters;
+};
+
 const SearchPage = () => {
-  const regionDropdownItems = regions.map((r) => {
-    return {
-      ...r,
-      key: r?.name,
-      value: r?.name,
-      label: `${r?.name} (${r?.offset} - ${r?.limit + r?.offset})`
-    };
-  });
+  const [filter, setFilter] = useState({});
 
-  const typeDropdownItems = types.map((t) => ({
-    key: t,
-    value: t,
-    label: t
-  }));
+  const onFilterChange = (key, value) => {
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      [key]: value
+    }));
+  };
 
-  const sortbyDropdownItems = sortby.map((s) => ({
-    key: s,
-    value: s,
-    label: s
-  }));
+  const pokemonFilters = getFetchPokemonFilters(filter);
+  console.log({ pokemonFilters });
 
   return (
     <Container>
       <Logo src={pokemonLogo} width={200} />
       <StyledRow>
         <Col xs={24} sm={12} md={6}>
-          <FilterDropdown label="REGION" items={regionDropdownItems} />
+          <FilterDropdown
+            label="REGION"
+            items={regionDropdownItems}
+            onChange={(item) => onFilterChange('region', item)}
+          />
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <FilterDropdown label="TYPE" items={typeDropdownItems} />
+          <FilterDropdown
+            label="TYPE"
+            items={typeDropdownItems}
+            onChange={(item) => onFilterChange('type', item)}
+          />
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <FilterDropdown label="SORT BY" items={sortbyDropdownItems} />
+          <FilterDropdown
+            label="SORT BY"
+            items={sortbyDropdownItems}
+            onChange={(item) => onFilterChange('sortBy', item)}
+          />
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <Search label={'SEARCH'} />
+          <Search
+            label={'SEARCH'}
+            placeholder="TYPING..."
+            onChange={(value) => onFilterChange('search', value)}
+          />
         </Col>
       </StyledRow>
     </Container>
