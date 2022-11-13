@@ -9,11 +9,12 @@ const StyledDiv = styled.div`
   align-items: center;
 
   .dropdown-wrapper {
-    min-width: 20rem;
-    padding: 1rem;
+    margin-top: 1rem;
 
     .ant-btn {
       font-size: 1rem;
+      min-width: 20rem;
+      height: 3rem;
     }
   }
 `;
