@@ -11,13 +11,14 @@ const StyledCard = styled(CardAntd)`
     padding: 0;
   }
 
-  border-radius: ${({ borderRadius }) => borderRadius};
+  border-radius: ${({ borderRadius }) => borderRadius || '0.1rem'};
+  max-width: ${({ width }) => width || '60rem'};
 `;
 
-const Card = ({ children, left, right, bgColor, ...props }) => {
+const Card = ({ children, left, right, bgColors = [], maxWidth, ...props }) => {
   const header = <Header left={left} right={right} />;
   return (
-    <StyledCard bgColor={bgColor} {...props}>
+    <StyledCard bgColors={bgColors} maxWidth={maxWidth} {...props}>
       {header && header}
       {children}
     </StyledCard>
