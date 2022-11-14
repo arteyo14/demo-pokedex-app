@@ -44,7 +44,7 @@ const PokemonCard = ({ pokemon }) => {
         hoverable
       >
         <StyledImage>
-          <img src={pokemon?.images} width={'100%'} />
+          <img src={pokemon?.image} width={'100%'} height="150px" />
         </StyledImage>
         <Text fontSize="1.2rem">{pokemon?.name}</Text>
       </Card>
