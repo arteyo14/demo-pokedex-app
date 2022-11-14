@@ -2,14 +2,22 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 
-import { Logo, FilterDropdown, Search } from '@atomic';
+import { Logo, FilterDropdown, Search, PokemonCard } from '@atomic';
 
 import { regions, types, sortby } from './helper';
+import { pokemonInfo } from '@/utils';
 
 import pokemonLogo from '@/assets/images/pokedex.png';
 
 const Container = styled.div`
   text-align: center;
+`;
+
+const PokemonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  justify-content: space-around;
 `;
 
 const StyledRow = styled(Row)`
@@ -45,17 +53,16 @@ const getFetchPokemonFilters = (filters) => {
 };
 
 const SearchPage = () => {
-  const [filter, setFilter] = useState({});
+  const [filters, setFilters] = useState({});
 
   const onFilterChange = (key, value) => {
-    setFilter((prevFilter) => ({
+    setFilters((prevFilter) => ({
       ...prevFilter,
       [key]: value
     }));
   };
 
-  const pokemonFilters = getFetchPokemonFilters(filter);
-  console.log({ pokemonFilters });
+  const pokemonFilters = getFetchPokemonFilters(filters);
 
   return (
     <Container>
@@ -90,6 +97,11 @@ const SearchPage = () => {
           />
         </Col>
       </StyledRow>
+      <PokemonContainer>
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((x) => (
+          <PokemonCard key={x} pokemon={pokemonInfo} />
+        ))}
+      </PokemonContainer>
     </Container>
   );
 };
